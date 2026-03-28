@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 
 REQUIREMENTS = ['requests', 'beautifulsoup4']
 
-COMPONENT_REPO = 'https://github.com/SeanChengN/OilPrice/'
+COMPONENT_REPO = 'https://github.com/xz0609/OilPrice/'
 SCAN_INTERVAL = datetime.timedelta(hours=8)
 ICON = 'mdi:gas-station'
 
@@ -65,24 +65,30 @@ class OilPriceSensor(Entity):
         _LOGGER.info("Updating oil price info from http://www.qiyoujiage.com/")
         try:
             header = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36'
             }
-            response = request('GET', 'http://www.qiyoujiage.com/' + self._region + '.shtml', 
+            response = request('GET', 'http://m.qiyoujiage.com/' + self._region + '.shtml', 
                               headers=header, timeout=10)
             response.raise_for_status()
             response.encoding = 'utf-8'
             
             soup = BeautifulSoup(response.text, "lxml")
-            dls = soup.select("#youjia > dl")
-            self._state = soup.select("#youjiaCont > div")[1].contents[0].strip()
-
+            dls = soup.select('#content > div.table_wrap > div.content_youjia > dl')
+            _state = soup.select('#content > div.table_wrap > div.tishi')[0].text.strip()
+            if '\n' in _state:
+                self._state = _state.split('\n')[1]
+            
             for dl in dls:
                 match = re.search(r"\d+", dl.select('dt')[0].text)
                 if match:
                     k = match.group()
-                    self._entries[k] = dl.select('dd')[0].text
+                    price = dl.select('dd')[0].text
+                    if "元" in price:
+                        self._entries[k] = price.replace("(", "").replace("元", "").replace(")", "") #去除中文字符"元"，方便自动化直接使用数字
+                    else:
+                        self._entries[k] = price
             self._entries["update_time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            self._entries["tips"] = soup.select("#youjiaCont > div:nth-of-type(2) > span")[0].text.strip()
+            self._entries["tips"] = soup.select('#content > div.table_wrap > div.tishi > span:nth-child(1)')[0].text.strip()
             self._entries["status"] = "online"
             self._available = True
             

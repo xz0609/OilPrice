@@ -2,7 +2,7 @@
   "domain": "oilprice",
   "name": "Oil Price",
   "version": "1.0.1",
-  "documentation": "https://github.com/SeanChengN/OilPrice",
+  "documentation": "https://github.com/xz0609/OilPrice",
   "codeowners": ["@SeanChengN"],
   "requirements": ["requests", "beautifulsoup4"],
   "config_flow": true,
