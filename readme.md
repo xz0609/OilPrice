@@ -23,7 +23,8 @@ markdown界面效果
 ![avatar](https://github.com/SeanChengN/OilPrice/blob/master/2.PNG)
 
 
-添加一个《markdown卡片》，点击《显示代码编辑器》，把zhe_jiang替换成你自己的省份即可。
+添加一个《markdown卡片》，点击《显示代码编辑器》，把zhe_jiang_you_jie替换成你刚添加插件里的name即可。
+例如我填的是《浙江油价》，在开发者工具界面-实体里看到的就是zhe_jiang_you_jie
 
 新版的配置：
 ```yaml
