@@ -15,12 +15,12 @@
 # 前台界面
 开发者工具界面-实体的具体数值
 
-![avatar](https://github.com/xz0609/OilPrice/blob/master/1.PNG)
+![avatar](https://github.com/xz0609/OilPrice/blob/Fix_HostName/1.PNG))
 
 
 markdown界面效果
 
-![avatar](https://github.com/SeanChengN/OilPrice/blob/master/2.PNG)
+![avatar](https://github.com/xz0609/OilPrice/blob/Fix_HostName/2.PNG)
 
 
 添加一个《markdown卡片》，点击《显示代码编辑器》，把zhe_jiang_you_jie替换成你刚添加插件里的name即可。
